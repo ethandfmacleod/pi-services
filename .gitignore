@@ -23,9 +23,18 @@ __pycache__/
 *.bak
 *.swp
 
-.DS_Store
-*.sublime-workspace
 *.vscode/
-Thumbs.db
 
 node_modules/
+
+# Plex config/state
+raspberry-pi-5/plex/config/
+raspberry-pi-5/plex/**/Library/
+raspberry-pi-5/plex/**/Application Support/
+
+# Transmission config/state
+raspberry-pi-5/transmission/config/
+raspberry-pi-5/transmission/data/
+
+# FileBrowser config
+raspberry-pi-5/filebrowser/config/

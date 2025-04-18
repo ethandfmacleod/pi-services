@@ -7,7 +7,7 @@ This project defines a containerized monitoring and utility stack across two Ras
 ## 🧱 Architecture Overview
 
 - **Pi 4B**: Primary monitoring hub, hosting system metrics, a PostgreSQL instance, a Flask-based Wake-on-LAN API, and dashboards via Grafana.
-- **Pi 5**: (coming soon) Additional node-exporter metrics source and possibly auxiliary services.
+- **Pi 5**: Media and utility server hosting Plex, Transmission, FileBrowser, and Heimdall.
 
 ---
 
@@ -86,25 +86,92 @@ Replace `<pi4-ip>` with the IP address or Tailscale domain of your Pi 4B.
 
 ---
 
-## 🍍 Pi 5 — Coming Soon
+## 🍍 Pi 5 — Services Overview
 
-Configuration and service details for the Pi 5 will be added here in the next update.
+Path: [`raspberry-pi-5/`](./raspberry-pi-5)
+
+### 📦 Services
+
+| Service         | Description                                                                  |
+|-----------------|------------------------------------------------------------------------------|
+| `plex`          | Media server for streaming your TV shows and movies                          |
+| `transmission`  | BitTorrent client with a web UI for downloading content                       |
+| `filebrowser`   | Simple file manager with a web interface for browsing and managing files      |
+| `heimdall`      | Personal start page to manage and launch your other services                  |
+
+---
+
+## ⚙️ Configuration
+
+### 📁 Environment Variables
+
+Copy the example environment file and populate it with your own values:
+
+```bash
+cp raspberry-pi-5/sample.env raspberry-pi-5/.env
+```
+
+Then edit `.env` to match your setup:
+
+```dotenv
+# Common
+PUID=1000
+PGID=1000
+TZ=Pacific/Auckland
+
+# Media directories
+MEDIA_TV_DIR=/mnt/unitek/storage/Tv
+MEDIA_MOVIES_DIR=/mnt/unitek/storage/Movies
+MEDIA_INCOMPLETE_DIR=/mnt/unitek/storage/transmission/incomplete
+
+# Transmission credentials
+TRANS_USER=transmission
+TRANS_PASS=FwhUmqW55C59
+
+# Optional port overrides
+FILEBROWSER_PORT=8081
+HEIMDALL_PORT=81
+```
+
+---
+
+## 🚀 Running Pi 5 Stack
+
+To build and run the `pi-5` stack:
+
+```bash
+cd raspberry-pi-5
+docker compose up -d --build
+```
+
+This will:
+- Load environment variables from `.env`
+- Start Plex, Transmission, FileBrowser, and Heimdall
+
+---
+
+## 📊 Accessing Services
+
+| Service        | URL                            |
+|----------------|--------------------------------|
+| Plex           | http://<pi5-ip>:32400/web      |
+| Transmission   | http://<pi5-ip>:9091           |
+| FileBrowser    | http://<pi5-ip>:8081           |
+| Heimdall       | http://<pi5-ip>:81             |
+
+Replace `<pi5-ip>` with the IP address or Tailscale domain of your Pi 5.
 
 ---
 
 ## 🧼 Maintenance & Updating
 
-To update the stack after pulling Git changes:
+To update either stack after pulling Git changes:
 
 ```bash
-cd raspberry-pi-4
+cd raspberry-pi-4   # or raspberry-pi-5
 git pull
 docker compose down
 docker compose up -d --build
 ```
 
 ---
-
-## 📝 License
-
-MIT (or your preferred license)
