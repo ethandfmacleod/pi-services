@@ -1,0 +1,26 @@
+global:
+  smtp_smarthost: 'smtp:25'
+  smtp_from: 'alert@example.com'
+
+route:
+  group_by: [alertname, severity]
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 1h
+  receiver: discord-alerts
+
+receivers:
+  - name: discord-alerts
+    webhook_configs:
+      - url: '{{ env "DISCORD_WEBHOOK_URL" }}'
+        send_resolved: true
+        message: |-
+          🚨 *{{ .Status | toUpper }}* alert: **{{ .CommonLabels.alertname }}**
+
+          **Severity:** {{ .CommonLabels.severity }}
+          **Instance:** {{ .CommonLabels.instance }}
+          **Summary:** {{ .CommonAnnotations.summary }}
+          **Description:** {{ .CommonAnnotations.description }}
+
+          [View in Prometheus](http://192.168.0.100:9090)
+
