@@ -1,14 +1,15 @@
 services:
 
-  # General Flask API
-  flask:
-    build: ./flask
-    ports:
-      - "${FLASK_PORT}:5000"
-    env_file:
-      - .env
+  # UpSnap Wake Over Lan (WOL)
+  upsnap:
+    container_name: upsnap
+    image: ghcr.io/seriousm4x/upsnap:latest
+    network_mode: host
+    volumes:
+      - upsnap_data:/app/pb_data    
     environment:
-      - WAKE_MAC_ADDRESS=${WAKE_MAC_ADDRESS}
+      - USERNAME=${UPSNAP_USER}
+      - PASSWORD=${UPSNAP_PASSWORD}
     restart: unless-stopped
 
   # Postgres DB
@@ -79,5 +80,6 @@ networks:
     driver: bridge
 
 volumes:
+  upsnap_data:
   grafana_data:
   postgres_data:
