@@ -1,6 +1,6 @@
 services:
 
-  # UpSnap Wake Over Lan (WOL)
+  # UpSnap Wake Over Lan (WOL) (port 8090)
   upsnap:
     container_name: upsnap
     image: ghcr.io/seriousm4x/upsnap:latest
