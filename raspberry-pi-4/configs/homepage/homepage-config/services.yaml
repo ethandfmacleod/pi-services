@@ -1,0 +1,98 @@
+- Media:
+
+    - Plex:
+        icon: plex.png
+        href: http://192.168.0.101:32400
+        ping: http://192.168.0.101:32400
+        description: "Media server for movies & shows"
+        container: plex
+
+        widget:
+          type: tautulli
+          url: http://192.168.0.101:8181
+          key: 
+          enableUser: true
+          showEpisodeNumber: true
+          expandOneStreamToTwoRows: false
+
+    - Overseerr:
+        icon: overseerr.png
+        href: http://192.168.0.101:5055
+        ping: http://192.168.0.101:5055
+        description: "Media request management for Plex media server"
+        container: overseerr
+
+        widget:
+          type: overseerr
+          url: http://192.168.0.101:5055/
+          key: 
+    
+    - Sonarr:
+        icon: sonarr.png
+        href: http://192.168.0.101:8989
+        ping: http://192.168.0.101:8989
+        description: "Automatic TV show downloading"
+
+        widget:
+            type: sonarr
+            url: http://192.168.0.101:8989
+            key: 
+            fields: ["wanted", "queued", "series"]
+
+    - Radarr:
+        icon: radarr.png
+        href: http://192.168.0.101:7878
+        ping: http://192.168.0.101:7878
+        description: "Automatic movie downloading"
+
+        widget:
+            type: radarr
+            url: http://192.168.0.101:7878
+            key: 
+            fields: ["wanted", "missing", "queued", "movies"]
+
+    - Prowlarr:
+        icon: prowlarr.png
+        href: http://192.168.0.101:9696
+        ping: http://192.168.0.101:9696
+        description: "Indexer management (for use with *arr ecosystem)"
+
+        widget:
+            type: prowlarr
+            url: http://192.168.0.101:9696
+            key: 
+            fields: ["numberOfGrabs", "numberOfQueries", "numberOfFailGrabs", "numberOfFailQueries"]
+
+    - Jackett:
+        icon: jackett.png
+        href: http://192.168.0.101:9117
+        ping: http://192.168.0.101:9117
+        description: "Indexers. Used with Sonarr and Radarr"
+
+        widget:
+            type: jackett
+            url: http://192.168.0.101:9117
+            password: 
+            fields: ["configured", "errored"]
+
+- Information:
+    - Pi 5:
+        icon: si-tailscale
+        href: 
+        description: router connection
+        ping: 
+        widget:
+            type: tailscale
+            deviceid: 
+            key: 
+            fields: ["address", "last_seen", "expires"]
+    - Pi 4B:
+        icon: si-tailscale
+        href: 
+        description: router connection
+        ping: 
+        widget:
+            type: tailscale
+            deviceid: 
+            key: 
+            fields: ["address", "last_seen", "expires"]
